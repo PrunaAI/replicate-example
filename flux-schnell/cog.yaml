@@ -1,0 +1,17 @@
+build:
+  gpu: true
+  cuda: "12.1"
+  system_packages:
+    - "libgl1-mesa-glx"
+    - "libglib2.0-0"
+    - "git"
+    - "build-essential"  # Added for the C compiler
+
+  python_version: "3.11"
+
+  run:
+    - command: pip install pruna[gpu]==0.1.2 --extra-index-url https://prunaai.pythonanywhere.com/
+    - command: pip install colorama
+    - command: export CC=/usr/bin/gcc  # Set the CC environment variable to point to gcc
+
+predict: "predict.py:Predictor"
