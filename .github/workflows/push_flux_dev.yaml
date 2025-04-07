@@ -1,4 +1,4 @@
-name: Push Flux Schnell to Replicate
+name: Push Flux Dev to Replicate
 
 on:
   # Workflow dispatch allows you to manually trigger the workflow from GitHub.com
@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       model_name:
-        description: 'Enter the model name, like "alice/bunny-detector". If unset, this will default to the value of `image` in cog.yaml.'
-        default: "prunaai/flux-schnell"
+        description: 'Enter the model name, like "prunaai/flux-dev". If unset, this will default to the value of `image` in cog.yaml.'
+        default: "prunaai/flux-dev"
 
 jobs:
   push_to_replicate:
@@ -43,7 +43,7 @@ jobs:
       # If you leave it blank (or if the workflow is triggered by a push), the 
       # model name will be derived from the `image` value in cog.yaml.
       - name: Push to Replicate
-        working-directory: flux-schnell
+        working-directory: flux-dev
         run: |
           if [ -n "${{ inputs.model_name }}" ]; then
             cog push r8.im/${{ inputs.model_name }}

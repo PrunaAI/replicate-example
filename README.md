@@ -1,6 +1,6 @@
-# Flux Schnell: Replicate Example
+# Flux Dev: Replicate Example
 
-Flux Schnell is an example project that demonstrates how to build, optimize, and deploy a deep learning model using Cog and Pruna AI's model smashing (optimization) tools. This repository is configured to work with GPU support and integrates with Replicate for model hosting and inference.
+Flux Dev is an example project that demonstrates how to build, optimize, and deploy a deep learning model using Cog and Pruna AI's model smashing (optimization) tools. This repository is configured to work with GPU support and integrates with Replicate for model hosting and inference.
 
 > **Note:** This repository leverages Cog for model building and prediction, and uses a GitHub Actions workflow for pushing the model to Replicate. Ensure you have the necessary tokens and credentials configured to run and deploy the model.
 
@@ -10,12 +10,12 @@ Flux Schnell is an example project that demonstrates how to build, optimize, and
 
 prunaai-replicate-example/  
 ├── README.md  
-├── flux-schnell/  
+├── flux-dev/  
 │   ├── cog.yaml       (Cog configuration file for building and running the model)  
 │   └── predict.py     (Predictor implementation with model smashing and caching setup)  
 └── .github/  
     └── workflows/  
-        └── push_flux_schnell.yaml  (GitHub Actions workflow to push the model to Replicate)
+        └── push_flux_dev.yaml  (GitHub Actions workflow to push the model to Replicate)
 
 ---
 
@@ -24,8 +24,6 @@ prunaai-replicate-example/
 ### Prerequisites
 
 - **Docker:** Required for building and running Cog environments.
-- **Python 3.11:** The project is configured to use Python 3.11.
-- **CUDA 12.1 & GPU Support:** Ensure you have a compatible NVIDIA GPU and the correct CUDA drivers installed.
 - **Git:** For version control and repository management.
 - **Cog CLI:** Install the Cog CLI from https://github.com/replicate/cog to build and run the model locally.
 - **Replicate API Token:** (Optional) Set up your Replicate API token in GitHub Secrets (as REPLICATE_API_TOKEN) if you plan to push the model automatically using GitHub Actions.
@@ -39,7 +37,7 @@ prunaai-replicate-example/
    ```
 2. **Configure Environment Variables:**  
    - For local testing, ensure that you have Docker running.  
-   - Replace `<your-token>` in the file flux-schnell/predict.py with your actual token.
+   - Replace `<your-token>` in the file flux-dev/predict.py with your actual token. If you don't have a token, you can get one from here: https://docs.pruna.ai/en/stable/setup/pip.html#installing-pruna-pro
 
 3. **Install Cog (if you haven't already):**  
    ```bash
@@ -53,9 +51,9 @@ prunaai-replicate-example/
 The model is defined in the flux-schnell directory and is built using the cog.yaml configuration.
 
 1. **Build the Model:**  
-   Navigate to the flux-schnell directory and build the model using Cog:  
+   Navigate to the flux-dev directory and build the model using Cog:  
    ```bash
-   cd flux-schnell  
+   cd flux-dev  
    cog build
    ```
 
@@ -64,7 +62,7 @@ The model is defined in the flux-schnell directory and is built using the cog.ya
 2. **Run a Prediction:**  
    After building the model, you can run a prediction. For example, execute:  
    ```bash
-   cog run --input prompt="a scenic landscape with mountains" --input num_inference_steps=10 --input guidance_scale=7.5
+   cog run --input prompt="a scenic landscape with mountains" --input num_inference_steps=28 --input guidance_scale=7.5
    ```
 
    This command performs the following actions in the predict function of predict.py:
@@ -77,7 +75,7 @@ The model is defined in the flux-schnell directory and is built using the cog.ya
 
 ## GitHub Actions Workflow for Replicate
 
-The repository includes a GitHub Actions workflow located at .github/workflows/push_flux_schnell.yaml that automates pushing the built model to Replicate.
+The repository includes a GitHub Actions workflow located at .github/workflows/push_flux_dev.yaml that automates pushing the built model to Replicate.
 
 ### How It Works
 
@@ -95,7 +93,7 @@ The repository includes a GitHub Actions workflow located at .github/workflows/p
 If you need to push the model manually, navigate to the flux-schnell directory and run:  
 
 ```bash
-cog push r8.im/prunaai/flux-schnell  
+cog push r8.im/prunaai/flux-dev  
 ```
 
 Ensure that your Replicate API token is set either in GitHub Secrets or in your local environment.
@@ -105,7 +103,7 @@ Ensure that your Replicate API token is set either in GitHub Secrets or in your 
 ## Customization
 
 - **Model Optimization:**  
-  The model optimization is configured in flux-schnell/predict.py using the SmashConfig settings. Modify these parameters (such as cache interval, start step, and compile options) to suit your use case.
+  The model optimization is configured in flux-dev/predict.py using the SmashConfig settings. Modify these parameters to suit your use case.
 
 - **Dependencies:**  
   Update or add Python packages as needed by modifying the commands in the run section of cog.yaml.
